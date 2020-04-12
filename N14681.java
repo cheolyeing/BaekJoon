@@ -1,0 +1,1 @@
+import java.util.*;class N14681{public static void main(String[] v){Scanner s=new Scanner(System.in);int a=s.nextInt(),b=s.nextInt();System.out.print(a>0?b>0?1:4:b>0?2:3);}}
