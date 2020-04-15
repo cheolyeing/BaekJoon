@@ -5,9 +5,10 @@ public class N1727 {
 	static int n, m, ans = Integer.MAX_VALUE;
 	static boolean[] visited;
 	static int[] boy, girl;
-	static int[][] dp;
+	static long[][] dp;
 	public static void main(String[] args) throws IOException {
 		setting();
+		solution();
 	}
 	
 	static void setting () throws IOException {
@@ -16,36 +17,22 @@ public class N1727 {
 		n = Integer.parseInt(st.nextToken());
 		m = Integer.parseInt(st.nextToken());
 		boy = new int[n+1]; girl = new int[m+1];
-		dp = new int[n+1][m+1];
+		dp = new long[n+1][m+1];
 		st = new StringTokenizer(br.readLine());
-		for(int i=1; i<=n; i++) dp[i][0] = Integer.parseInt(st.nextToken());
+		for(int i=1; i<=n; i++) boy[i] = Integer.parseInt(st.nextToken());
 		st = new StringTokenizer(br.readLine());
-		for(int i=1; i<=m; i++) dp[0][i] = Integer.parseInt(st.nextToken());
+		for(int i=1; i<=m; i++) girl[i] = Integer.parseInt(st.nextToken());
+		Arrays.sort(boy); Arrays.sort(girl);
 	}
 	
 	static void solution() {
 		for(int i=1; i<=n; i++) {
 			for(int j=1; j<=m; j++) {
-				dp[i][j] = Math.abs(dp[i][0]-dp[0][j]);
+				dp[i][j] = dp[i-1][j-1] + Math.abs(boy[i]-girl[j]);
+				if(i>j) dp[i][j] = Math.min(dp[i][j], dp[i-1][j]);
+				if(j>i) dp[i][j] = Math.min(dp[i][j], dp[i][j-1]);
 			}
 		}
-		
-		if(n<m) {
-			visited = new boolean[m+1];
-			backTracking(0, 1, false);
-		} else {
-			visited = new boolean[n+1];
-			backTracking(0, 1, true);
-		}
-	}
-	
-	static void backTracking(int sum, int idx, boolean row) {
-		if(row) {
-			for(int i=1; i<=n; i++) {
-				if(!visited[i]) {
-					
-				}
-			}
-		}
+		System.out.println(dp[n][m]);
 	}
 }
